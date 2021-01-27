@@ -17,6 +17,7 @@ import frc.robot.constants.ConstantsElevator;
 public class TrapezoidElevatorSubsystem extends TrapezoidProfileSubsystem {
   
   private ElevatorFeedforward elevatorFeedforward;
+  private double feedforward;
   
   private VictorSP elevatorMotor_1, elevatorMotor_2;
   private SpeedControllerGroup elevatorMotorsGroup;
@@ -61,13 +62,13 @@ public class TrapezoidElevatorSubsystem extends TrapezoidProfileSubsystem {
     return limitSwitchElevator_DOWN;
   }
 
+  public void calculateFeedforward(double velocity, double acceleration) {
+    double feedforward = elevatorFeedforward.calculate(velocity, acceleration);
+    this.feedforward = feedforward;
+  }
+
   @Override
-  public void useState(TrapezoidProfile.State setpointState) { 
-    double feedforward = elevatorFeedforward.calculate(setpointState.position, setpointState.velocity);
-    if(feedforward > 12) {
-      this.elevatorMotorsGroup.setVoltage(feedforward/12);
-    } else {
+  public void useState(TrapezoidProfile.State state) { 
     this.elevatorMotorsGroup.setVoltage(feedforward);
-    }
   }
 }
