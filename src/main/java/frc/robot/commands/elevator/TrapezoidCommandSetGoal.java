@@ -18,6 +18,7 @@ public class TrapezoidCommandSetGoal extends CommandBase {
   private double position;
   private double velocity;
   private double currentPosition;
+  private double currentVelocity;
   private double prevVelocity = 0.0;
   private double currentAcceleration;
 
@@ -45,10 +46,10 @@ public class TrapezoidCommandSetGoal extends CommandBase {
 
   @Override
   public void execute() {
-    double currentVelocity = tes.getEncoder().getRate();
-    currentAcceleration = (currentVelocity - prevVelocity)/0.02;
-    prevVelocity = currentVelocity;
-    tes.calculateFeedforward(currentVelocity, currentAcceleration);
+    this.currentVelocity = tes.getEncoder().getRate();
+    this.currentAcceleration = (currentVelocity - prevVelocity)/0.02;
+    this.prevVelocity = currentVelocity;
+    this.tes.calculateFeedforward(currentVelocity, currentAcceleration);
   }
 
   @Override
@@ -66,7 +67,7 @@ public class TrapezoidCommandSetGoal extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    boolean stop = (currentPosition == goal.position && prevVelocity == goal.velocity) ||
+    boolean stop = (currentPosition == goal.position) ||
     (tes.getLimitSwitch_UP().get() == limitSwitchStatus_UP) || 
     (tes.getLimitSwitch_DOWN().get() == limitSwitchStatus_DOWN);
     return stop;
