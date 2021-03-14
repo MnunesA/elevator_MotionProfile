@@ -44,7 +44,7 @@ public class RobotContainer {
     POV_BUTTON_270 = new POVButton(xboxController, 270);
   }
 
-  private void configureButtonFunctions() {}
+  private void configureButtonFunctions() {}           
 
   protected void configureConditionalButtonFuntions() {
 

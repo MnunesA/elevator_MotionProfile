@@ -49,7 +49,7 @@ public class TrapezoidCommandSetGoal extends CommandBase {
     this.currentVelocity = tes.getEncoder().getRate();
     this.currentAcceleration = (currentVelocity - prevVelocity)/0.02;
     this.prevVelocity = currentVelocity;
-    this.tes.calculateFeedforward(currentVelocity, currentAcceleration);
+    this.tes.useState(new TrapezoidProfile.State(currentVelocity, currentAcceleration));
   }
 
   @Override
